@@ -1,24 +1,19 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function WeatherHandling() {
-  const weatherImgRef = useRef<HTMLImageElement>(null);
-  const weatherCityRef = useRef<HTMLHeadingElement>(null);
-  const weatherRef = useRef<HTMLHeadingElement>(null);
+  const [weatherImg, setWeatherImg] = useState("");
+  const [weatherCity, setWeatherCity] = useState("");
+  const [weather, setWeather] = useState("");
+
   useEffect(() => {
     async function initWeather() {
       const apiReq = await axios.get(
         "http://api.weatherapi.com/v1/current.json?key=667dc15b610d47ddb18190743232409&q=50.02,22.67&aqi=no",
       );
-      if (
-        weatherImgRef.current &&
-        weatherRef.current &&
-        weatherCityRef.current
-      ) {
-        weatherImgRef.current.src = apiReq.data.current.condition.icon;
-        weatherRef.current.textContent = apiReq.data.current.feelslike_c + "°C";
-        weatherCityRef.current.textContent = apiReq.data.location.name;
-      }
+      setWeatherImg(apiReq.data.current.condition.icon);
+      setWeather(apiReq.data.current.feelslike_c + "°C");
+      setWeatherCity(apiReq.data.location.name);
     }
 
     initWeather();
@@ -28,14 +23,16 @@ export default function WeatherHandling() {
   return (
     <div
       className={
-        "flex justify-center items-center text-white flex-col scale-150 m-3"
+        "flex justify-center items-center text-white text-3xl flex-row m-3 w-full"
       }
     >
-      <div className={"flex justify-center items-center"}>
-        <img src={""} ref={weatherImgRef} />
-        <h1 className={"font-bold"} ref={weatherRef}></h1>
+      <div className={"contents w-[96px] h-[96px] -z-10 mr-5"}>
+        <img src={weatherImg} className={"scale-[2]"} />
       </div>
-      <h1 className={"-mt-3"} ref={weatherCityRef}></h1>
+      <div className={"flex justify-center items-center flex-col z-10 ml-5"}>
+        <h1 className={"font-bold "}>{weather}</h1>
+        <h1 className={""}>{weatherCity}</h1>
+      </div>
     </div>
   );
 }
