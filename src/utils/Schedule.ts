@@ -1,7 +1,7 @@
-interface LessonTime {
+type LessonTime = {
   start: string;
   end: string;
-}
+};
 
 const normalSchedule: LessonTime[] = [
   { start: "08:00", end: "08:45" },
@@ -37,24 +37,39 @@ const shortenedSchedule: LessonTime[] = [
   { start: "15:45", end: "16:15" },
 ];
 
-const getCurrentLesson = (schedule: LessonTime[]): string[] => {
+const isCurrentTimeInRange = (
+  currentTime: string,
+  startTime: string,
+  endTime: string
+): boolean => {
+  return currentTime >= startTime && currentTime <= endTime;
+};
+
+const getCurrentLesson = (
+  schedule: LessonTime[]
+): { current: string; timeTo: string } => {
   const now = new Date();
   const currentHour = now.getHours();
   const currentMinute = now.getMinutes();
-  const currentTime = `${currentHour}:${
-    currentMinute < 10 ? "0" : ""
-  }${currentMinute}`;
+  const currentSecond = now.getSeconds();
+  const currentTime = `${currentHour}:${currentMinute}:${currentSecond}`;
 
   for (let i = 0; i < schedule.length; i++) {
     const lesson = schedule[i];
     const nextLesson = schedule[i + 1];
+    const endTimeParts = lesson.end.split(":");
+    const endHour = parseInt(endTimeParts[0], 10);
+    const endMinute = parseInt(endTimeParts[1], 10);
 
-    if (currentTime >= lesson.start && currentTime <= lesson.end) {
+    if (
+      currentHour < endHour ||
+      (currentHour === endHour && currentMinute <= endMinute)
+    ) {
       const timeRemaining = getTimeRemaining(lesson.end, currentTime);
-      return [
-        `🏫Aktualna lekcja: ${i + 1}`,
-        `⌚Czas do końca: ${timeRemaining}m`,
-      ];
+      return {
+        current: `Czas do końca ${i + 1} lekcji:`,
+        timeTo: `${timeRemaining.minutesRemaining}:${timeRemaining.secondsRemaining}`,
+      };
     }
 
     if (
@@ -63,21 +78,40 @@ const getCurrentLesson = (schedule: LessonTime[]): string[] => {
       currentTime <= nextLesson.start
     ) {
       const timeRemaining = getTimeRemaining(nextLesson.start, currentTime);
-      return ["🍵Jest przerwa", `⌚Zostało ${timeRemaining}m przerwy`];
+      return {
+        current: "Aktualnie trwa przerwa",
+        timeTo: `${timeRemaining.minutesRemaining}:${timeRemaining.secondsRemaining}`,
+      };
     }
   }
 
-  return ["Koniec lekcji 😁"];
+  return { current: "Koniec lekcji na dziś", timeTo: "" };
 };
-const getTimeRemaining = (endTime: string, currentTime: string): number => {
+
+const getTimeRemaining = (
+  endTime: string,
+  currentTime: string
+): { minutesRemaining: string; secondsRemaining: string } => {
   const endParts = endTime.split(":");
   const currentParts = currentTime.split(":");
   const endHour = parseInt(endParts[0], 10);
   const endMinute = parseInt(endParts[1], 10);
+  const endSecond = parseInt(endParts[2], 10) || 0;
   const currentHour = parseInt(currentParts[0], 10);
   const currentMinute = parseInt(currentParts[1], 10);
+  const currentSecond = parseInt(currentParts[2], 10) || 0;
 
-  return (endHour - currentHour) * 60 + (endMinute - currentMinute);
+  const totalSecondsRemaining =
+    (endHour - currentHour) * 3600 +
+    (endMinute - currentMinute) * 60 +
+    (endSecond - currentSecond);
+
+  const minutesRemaining = Math.floor(totalSecondsRemaining / 60).toString();
+  const secondsRemaining = (totalSecondsRemaining % 60)
+    .toString()
+    .padStart(2, "0");
+
+  return { minutesRemaining, secondsRemaining };
 };
 
 export {

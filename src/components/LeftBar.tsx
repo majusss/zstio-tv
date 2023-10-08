@@ -6,7 +6,7 @@ export default function LeftBar() {
   return (
     <div
       className={
-        "w-[22vw] h-screen bg-black self-start flex flex-col items-center justify-center mr-3"
+        "w-[22vw] h-screen bg-black self-start flex flex-col items-center justify-center border-[#272727] border-r-[1px]"
       }
     >
       <Clock />

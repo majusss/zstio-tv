@@ -9,43 +9,50 @@ export default function SpotifyHandling() {
 
   useEffect(() => {
     async function sendReq() {
-      // MOVE TO SSR
-      // // TODO: get refresh_token from cms
-      // const spotiReq = await axios.get(
-      // );
-      //
-      // if (!spotiReq.data.success) return;
-      //
-      // setPlaying(spotiReq.data.data.is_playing);
-      // if (!isPlaying) return;
-      // setSpotiImg(`url(${spotiReq.data.data.item.album.images[0].url})`);
-      // setSpotiTitle(spotiReq.data.data.item.name);
-      // setSpotiArtist(
-      //   spotiReq.data.data.item.artists
-      //     .map((artist: { name: string }) => artist.name)
-      //     .join(", "),
-      // );
+      const spotiReq = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/getCurrentPlaying`
+      );
+
+      if (!spotiReq.data.success) return;
+
+      setPlaying(spotiReq.data.playing);
+      if (!isPlaying) return;
+      setSpotiImg(`url(${spotiReq.data.image})`);
+      setSpotiTitle(spotiReq.data.title);
+      setSpotiArtist(spotiReq.data.artists);
     }
 
     sendReq();
 
-    setInterval(sendReq, 5000);
-  }, []);
+    setInterval(sendReq, 10000);
+  }, [isPlaying]);
 
   return (
     <div
-      style={{ backgroundImage: spotiImg, top: isPlaying ? 0 : "100%" }}
+      style={{ backgroundImage: spotiImg, top: isPlaying ? "15%" : "100%" }}
       className={
         "relative w-full aspect-square bg-cover bg-no-repeat transition-all duration-[1.5s]"
       }
     >
       <div
         className={
-          "w-full h-full flex flex-col text-white m-3 bg-gradient-to-b from-black to-transparent ml-0 mt-0"
+          "w-full h-full flex backdrop-brightness-50 flex-col text-white m-3 bg-gradient-to-b from-black to-transparent ml-0 mt-0 justify-end"
         }
       >
-        <h1 className={"font-bold ml-1 mt-5 text-3xl"}>{spotiTitle}</h1>
-        <h2 className={"ml-1 text-xl"}>{spotiArtist}</h2>
+        <div
+          className={
+            "ml-6 text-4xl font-bold whitespace-nowrap w-[calc(100%-3rem)] h-12 overflow-hidden"
+          }
+        >
+          <h2>{spotiTitle}</h2>
+        </div>
+        <h2
+          className={
+            "ml-6 text-xl text-gray-300 mb-36 font-semibold -mt-1 text-ellipsis w-[calc(100%-3rem)] overflow-hidden"
+          }
+        >
+          {spotiArtist}
+        </h2>
       </div>
     </div>
   );
