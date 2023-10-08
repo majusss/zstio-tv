@@ -1,11 +1,13 @@
-import LuckyHandling from "./Content/LuckyHandling.tsx";
-import WeatherHandling from "./Content/WeatherHandling.tsx";
+import LuckyHandling from "@/components/LeftBar/Content/LuckyHandling";
+import WeatherHandling from "@/components/LeftBar/Content/WeatherHandling";
 
 export default function Content() {
   return (
-    <div className={"flex flex-grow justify-start items-center flex-col"}>
-      <LuckyHandling />
+    <div
+      className={"flex w-full flex-grow justify-start items-center flex-col"}
+    >
       <WeatherHandling />
+      <LuckyHandling />
     </div>
   );
 }

@@ -5,7 +5,7 @@ Inspired from [Zespół Szkół Elektronicznych w Rzeszowie](https://elektronik.
 
 ## Tech Stack
 
-- TypeScript, Vite.js, React, TailwindCSS
+- Next.JS, TypeScript, React, TailwindCSS
 
 ## Links
 

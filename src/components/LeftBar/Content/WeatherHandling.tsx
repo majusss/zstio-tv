@@ -1,38 +1,31 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import useSWR from "swr";
+
+async function fetchData() {
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/getWeather`
+  );
+
+  const { icon, temperature } = res.data;
+
+  return { icon, temperature };
+}
 
 export default function WeatherHandling() {
-  const [weatherImg, setWeatherImg] = useState("");
-  const [weatherCity, setWeatherCity] = useState("");
-  const [weather, setWeather] = useState("");
+  const { data } = useSWR(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/getWeather`,
+    fetchData
+  );
 
-  useEffect(() => {
-    async function initWeather() {
-      const apiReq = await axios.get(
-        "http://api.weatherapi.com/v1/current.json?key=667dc15b610d47ddb18190743232409&q=50.02,22.67&aqi=no",
-      );
-      setWeatherImg(apiReq.data.current.condition.icon);
-      setWeather(apiReq.data.current.feelslike_c + "°C");
-      setWeatherCity(apiReq.data.location.name);
-    }
-
-    initWeather();
-
-    setInterval(initWeather, 1800000);
-  }, []);
   return (
     <div
       className={
-        "flex justify-center items-center text-white text-3xl flex-row m-3 w-full"
+        "flex rounded-lg mb-4 text-gray-200 bg-[#0e0e0e] border-[#272727] text-lg border-[1px] items-center justify-center w-[86%] h-[8vh]"
       }
     >
-      <div className={"contents w-[96px] h-[96px] -z-10 mr-5"}>
-        <img src={weatherImg} className={"scale-[2]"} />
-      </div>
-      <div className={"flex justify-center items-center flex-col z-10 ml-5"}>
-        <h1 className={"font-bold "}>{weather}</h1>
-        <h1 className={""}>{weatherCity}</h1>
-      </div>
+      <img src={data?.icon} width={50} height={50} className="mr-2" />
+      <h1 className="font-semibold text-2xl">Jarosław:</h1>
+      <h1 className="font-bold ml-2 text-3xl">{data?.temperature}</h1>
     </div>
   );
 }
