@@ -1,12 +1,10 @@
 import axios from "axios";
 import useSWR from "swr";
 
-async function fetchData() {
+async function fetchData(url: string) {
   let text = "",
     isVisible = true;
-  const res = await axios.get(
-    "https://cms.awfulworld.space/api/tekst-dodatkowy"
-  );
+  const res = await axios.get(url);
 
   const { data } = res.data;
 
@@ -33,7 +31,8 @@ async function fetchData() {
 export default function HintDisplay() {
   const { data } = useSWR(
     "https://cms.awfulworld.space/api/tekst-dodatkowy",
-    fetchData
+    fetchData,
+    { refreshInterval: 10 * 60 * 1000 }
   );
 
   return (

@@ -10,14 +10,18 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.5",
+    "@tailwindcss/typography": "^0.5.10",
     "axios": "^1.5.1",
     "cheerio": "^1.0.0-rc.12",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
+    "markdown-to-jsx": "^7.3.2",
     "next": "13.5.4",
+    "node-cache": "^5.1.2",
     "querystring": "^0.2.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-spring": "^9.7.3",
     "swr": "^2.2.4",
     "vulcan-api-js": "^3.3.0"
   },

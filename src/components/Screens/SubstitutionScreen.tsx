@@ -46,17 +46,17 @@ export default function SubstitutionScreen({
   }, []);
 
   if (typeof substitutions === "undefined") return null;
-
   return (
-    <>
+    <div>
       <h1
         className={
-          "flex justify-center items-center text-3xl font-semibold w-full my-6"
+          "flex justify-center items-center text-3xl font-semibold w-full mt-6"
         }
       >
         Zastępstwa na dzień{" "}
         {substitutions.tables[0].time.replace("Dzień: ", "")}
       </h1>
+      <hr className="h-px my-4 bg-[#272727] border-0" />
       <div className={"w-full h-full"}>
         <div className={"w-full flex justify-center items-center flex-col"}>
           {substitutions.tables[0].zastepstwa.map((zastepstwo, key) => {
@@ -111,6 +111,6 @@ export default function SubstitutionScreen({
           })}
         </div>
       </div>
-    </>
+    </div>
   );
 }

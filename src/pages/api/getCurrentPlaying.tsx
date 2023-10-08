@@ -11,13 +11,22 @@ export default async function handler(
     artists: string;
   }>
 ) {
+  const refreshToken = (
+    await axios.get("https://cms.awfulworld.space/api/spotify", {
+      headers: {
+        Authorization: `bearer ${process.env.SPOTI_CMS_API_TOKEN}`,
+      },
+    })
+  ).data;
+
   const authHeader = `Basic ${Buffer.from(
     `${process.env.SPOTI_ID}:${process.env.SPOTI_SECRET}`
   ).toString("base64")}`;
 
   const data = new URLSearchParams();
   data.append("grant_type", "refresh_token"); //TODO: REFRESH TOKEN FROM CMS
-  data.append("refresh_token", process.env.SPOTI_REFRESH_TOKEN as string);
+  data.append("refresh_token", refreshToken.data.attributes.refreshToken);
+  // data.append("refresh_token", process.env.SPOTI_REFRESH_TOKEN as string);
 
   const accessReq = await axios.post(
     "https://accounts.spotify.com/api/token",
