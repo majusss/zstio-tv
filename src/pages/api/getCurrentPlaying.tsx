@@ -24,9 +24,8 @@ export default async function handler(
   ).toString("base64")}`;
 
   const data = new URLSearchParams();
-  data.append("grant_type", "refresh_token"); //TODO: REFRESH TOKEN FROM CMS
+  data.append("grant_type", "refresh_token");
   data.append("refresh_token", refreshToken.data.attributes.refreshToken);
-  // data.append("refresh_token", process.env.SPOTI_REFRESH_TOKEN as string);
 
   const accessReq = await axios.post(
     "https://accounts.spotify.com/api/token",

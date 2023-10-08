@@ -37,14 +37,6 @@ const shortenedSchedule: LessonTime[] = [
   { start: "15:45", end: "16:15" },
 ];
 
-const isCurrentTimeInRange = (
-  currentTime: string,
-  startTime: string,
-  endTime: string
-): boolean => {
-  return currentTime >= startTime && currentTime <= endTime;
-};
-
 const getCurrentLesson = (
   schedule: LessonTime[]
 ): { current: string; timeTo: string } => {

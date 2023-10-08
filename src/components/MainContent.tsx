@@ -7,8 +7,6 @@ import CustomScreen from "@/utils/CustomScreen";
 import useSWR from "swr";
 import { gql } from "@apollo/client";
 import request from "graphql-request";
-//@ts-ignore
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const fetcher = (query: string) =>
   request("https://cms.awfulworld.space/graphql", query);

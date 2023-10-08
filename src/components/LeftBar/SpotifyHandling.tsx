@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
 import useSWR from "swr";
 const fetchData = async (url: string) => {
@@ -7,19 +6,13 @@ const fetchData = async (url: string) => {
   return { spotiReq: spotiReq.data };
 };
 export default function SpotifyHandling() {
-  const [spotiImg, setSpotiImg] = useState("");
-  const [spotiTitle, setSpotiTitle] = useState("");
-  const [spotiArtist, setSpotiArtist] = useState("");
-  const [isPlaying, setPlaying] = useState(false);
-
   const { data } = useSWR(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/api/getCurrentPlaying`,
     fetchData,
     { refreshInterval: 10 * 1000 }
   );
 
-  console.log(data);
-  // if (!data.success) return;
+  if (!data?.spotiReq?.success) return;
 
   return (
     <div
