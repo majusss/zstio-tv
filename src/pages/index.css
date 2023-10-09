@@ -2,6 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  overflow: hidden;
+}
 * {
   user-select: none;
+}
+
+.markdown p {
+  font-size: 1.3em;
+}
+.markdown h1 {
+  font-size: 4em;
+}
+.markdown h2 {
+  font-size: 3em;
+}
+.markdown h3 {
+  font-size: 2.6em;
+}
+.markdown h4 {
+  font-size: 2em;
+}
+.markdown h5 {
+  font-size: 1.6em;
+}
+.markdown h6 {
+  font-size: 1.4em;
+}
+
+.markdown ul {
+  margin-left: 2.6em;
+  list-style-type: disc;
+}
+.markdown ol {
+  margin-left: 2em;
+  list-style-type: decimal;
+}
+.markdown blockquote {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 40px;
+  margin-inline-end: 40px;
+  font-style: italic;
+}
+
+.markdown code {
+  background-color: #0e0e0e;
+  border: 1px solid #272727;
+  padding: 5px;
+  border-radius: 6px;
+  /* bg-[#0e0e0e] border-[#272727] border-[1px] */
+}
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
 }

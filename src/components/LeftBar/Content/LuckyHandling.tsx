@@ -1,21 +1,17 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
 import useSWR from "swr";
 
-async function fetchData() {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/getLuckyNumber`
-  );
+async function fetchData(url: string) {
+  const res = await axios.get(url);
 
   return res.data;
 }
 
 export default function LuckyHandling() {
-  const [luckyNumber, setLuckyNumber] = useState(0);
-
   const { data } = useSWR(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/api/getLuckyNumber`,
-    fetchData
+    fetchData,
+    { refreshInterval: 3 * 60 * 60 * 1000 }
   );
 
   return (

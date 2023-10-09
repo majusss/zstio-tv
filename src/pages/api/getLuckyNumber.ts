@@ -11,14 +11,16 @@ export default async function handler(
   const keystore = new Keystore();
   keystore.loadFromObject(
     JSON.parse(
-      // @ts-ignore
-      Buffer.from(process.env.VULCAN_KEYSTORE, "base64").toString("utf8")
+      Buffer.from(process.env.VULCAN_KEYSTORE as string, "base64").toString(
+        "utf8"
+      )
     )
   );
   const account = AccountTools.loadFromObject(
     JSON.parse(
-      // @ts-ignore
-      Buffer.from(process.env.VULCAN_ACCOUNT, "base64").toString("utf8")
+      Buffer.from(process.env.VULCAN_ACCOUNT as string, "base64").toString(
+        "utf8"
+      )
     )
   );
   const client = new VulcanHebe(keystore, account);
