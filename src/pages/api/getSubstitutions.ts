@@ -19,7 +19,7 @@ export default async function handler(
     try {
       const apiReq = (
         await axios.get(
-          "https://zastepstwa-zstio.netlify.app/api/getSubstitutions"
+          "https://zastepstwa.awfulworld.space/api/getSubstitutions"
         )
       ).data;
 
