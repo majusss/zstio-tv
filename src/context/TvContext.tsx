@@ -63,7 +63,7 @@ const TvProvider: React.FC<{
     async () => {
       try {
         if (!process.env.NEXT_PUBLIC_API) return;
-        const data = (await axios.get(`${process.env.NEXT_PUBLIC_API}/settings`)).data.settings as Settings;
+        const data = (await axios.get(`/proxy/cms/settings`)).data.settings as Settings;
         setHintText(data.hintText);
         setShowHint(data.showHint);
         setShowTimer(data.showTimer);
@@ -84,7 +84,7 @@ const TvProvider: React.FC<{
     async () => {
       try {
         if (!process.env.NEXT_PUBLIC_API) return;
-        const weather = (await axios.get(`${process.env.NEXT_PUBLIC_API}/weather`)).data.weather as Weather;
+        const weather = (await axios.get(`/proxy/cms/weather`)).data.weather as Weather;
         return {
           ...weather,
           hourly: weather.hourly.filter((w) =>
@@ -107,7 +107,7 @@ const TvProvider: React.FC<{
     async () => {
       try {
         if (!process.env.NEXT_PUBLIC_API) return;
-        const hint = (await axios.get(`${process.env.NEXT_PUBLIC_API}/hint`)).data.hint as Hint;
+        const hint = (await axios.get(`/proxy/cms/hint`)).data.hint as Hint;
         return hint;
       } catch (error) {
         //
@@ -125,7 +125,7 @@ const TvProvider: React.FC<{
     async () => {
       try {
         if (!process.env.NEXT_PUBLIC_API) return;
-        const screens = (await axios.get(`${process.env.NEXT_PUBLIC_API}/screen`)).data.screens as Screen[];
+        const screens = (await axios.get(`/proxy/cms/screen`)).data.screens as Screen[];
         return screens.filter((s) => s.show).sort((a, b) => a.index - b.index);
       } catch (error) {
         //
@@ -143,7 +143,7 @@ const TvProvider: React.FC<{
     async () => {
       try {
         if (!process.env.NEXT_PUBLIC_API) return;
-        const news = (await axios.get(`${process.env.NEXT_PUBLIC_API}/news`)).data.news as News[];
+        const news = (await axios.get(`/proxy/cms/news`)).data.news as News[];
         return news;
       } catch (error) {
         //
@@ -161,7 +161,7 @@ const TvProvider: React.FC<{
     async () => {
       try {
         if (!process.env.NEXT_PUBLIC_API) return;
-        const galery = (await axios.get(`${process.env.NEXT_PUBLIC_API}/galery`)).data.galery as GaleryImage[];
+        const galery = (await axios.get(`/proxy/cms/galery`)).data.galery as GaleryImage[];
         return galery.filter((g) => g.shown).sort((a, b) => a.id.localeCompare(b.id));
       } catch (error) {
         //

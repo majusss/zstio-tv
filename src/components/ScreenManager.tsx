@@ -36,7 +36,7 @@ const ScreenManager: React.FC = () => {
       screenComponents[
         ScreenId[screens[currentIndex + 1]?.id as unknown as keyof typeof ScreenId] ||
           ScreenId[screens[0]?.id as unknown as keyof typeof ScreenId]
-      ].node({
+      ]?.node({
         displayTimeSeconds: screens[currentIndex + 1]?.displayTimeSeconds || screens[0]?.displayTimeSeconds,
       }),
     );
